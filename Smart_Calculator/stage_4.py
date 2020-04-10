@@ -32,6 +32,33 @@ The program should not stop until the user enters the /exit command.
 """
 
 
+def process_line(line):
+    value = 0
+    sign = 1
+
+    idx = 0
+    while idx < len(line):
+        symbol = line[idx]
+        if symbol.isdigit():
+            number_parts = [symbol]
+            idx += 1
+
+            while idx < len(line) and line[idx].isdigit():
+                number_parts.append(line[idx])
+                idx += 1
+
+            number = int(''.join(number_parts))
+            value += sign * number
+            sign = 1
+            continue
+
+        if symbol == '-':
+            sign *= -1
+
+        idx += 1
+    return value
+
+
 if __name__ == '__main__':
     while True:
         input_line = input().strip()
@@ -45,4 +72,4 @@ if __name__ == '__main__':
             print('Bye!')
             break
 
-        print(eval(input_line))
+        print(process_line(input_line))
